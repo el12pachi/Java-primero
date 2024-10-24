@@ -1,4 +1,3 @@
-//Implementar una funcion que reciba una array bidimensional de enteros y devuleva la suma de todos sus elementos
 package Primera;
 
 public class BuscaMinas {

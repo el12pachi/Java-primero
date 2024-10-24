@@ -45,6 +45,7 @@ public class Ejercicio048 {
 
         return sum;
     }
+    
 
     public static void main(String arg[]) {
         int salarios[][] = {{700, 900, 1300, 800, 790, 850}, {1000, 950, 1080, 1070, 1200, 1100}, {1300, 930, 1200, 1170, 1000}, {1500, 1950, 1880, 1978, 2200, 2100}};
