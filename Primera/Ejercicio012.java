@@ -21,7 +21,6 @@ public class Ejercicio012 {
         int number2 = 4;
         int factorial = 1;
         int veces = number1 - number2;
-        int rep = 0;
 
         factorial = fact(number1, veces, factorial);
 

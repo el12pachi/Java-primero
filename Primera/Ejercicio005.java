@@ -6,7 +6,7 @@ package Primera;
 public class Ejercicio005 {
 
     public static void main(String srg[]) {
-        int x, y, n;
+        int x;
         x = 5;
         if ((x % 2) == 0) {
             System.out.println("El numero es par");

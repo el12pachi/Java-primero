@@ -7,13 +7,13 @@ import java.awt.*;
 public class Calculator extends JFrame implements ActionListener {
 
     private JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b0, sum, result, res, div, mult, delete;
-    private JLabel screen;
+    //private JLabel screen;
     String operacion[] = {"0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"};
     String number = "";
     int index = 0;
 
     public Calculator() {
-        screen = new JLabel("");
+      //  screen = new JLabel("");
 
         b1 = new JButton("1");
         b2 = new JButton("2");

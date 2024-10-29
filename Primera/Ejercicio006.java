@@ -6,7 +6,7 @@ package Primera;
 public class Ejercicio006 {
 
     public static void main(String srg[]) {
-        int x, y, n;
+        int x;
         x = 5;
         if ((x % 10) == 5) {
             System.out.println("El numero termina en 5");

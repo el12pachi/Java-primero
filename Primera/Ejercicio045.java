@@ -25,7 +25,6 @@ public class Ejercicio045 {
 
     public static void main(String arg[]) {
         String palabra;
-        Ejercicio045 hola = new Ejercicio045();
         write();
         hablar("Buenas tardesx");
         animalHabla("Me llamo toby", "Guau, Guau");
