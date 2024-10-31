@@ -24,7 +24,6 @@ public class Juego02 {
     }
 
     public static void main(String srg[]) {
-        int x, y;
         String[] div;
         int result = 0;
         Scanner input = new Scanner(System.in);
