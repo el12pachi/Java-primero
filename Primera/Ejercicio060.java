@@ -6,7 +6,6 @@ public class Ejercicio060 {
 
         for (int x = 0; x < vector.length; x++) {
             vector[x] = Character.toUpperCase(vector[x]);
-
         }
     }
     

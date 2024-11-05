@@ -1,23 +1,34 @@
 package Primera;
 
+//camino hacia la izquierda y el ultimo caracter se mueve al principio
 public class Ejercicio066 {
+    public static void derecha(int inicio, char[] frase, int x) {
+        char cambio = frase[x - 1];
+        for (int y = x - 1; y > inicio; y--) {
+            frase[y] = frase[y - 1];
+        }
+        frase[inicio] = cambio;
+    }
+
+    public static void izquierda(int inicio, char[] frase, int x) {
+        char cambio = frase[inicio];
+        for (int y = inicio; y < x - 1; y++) {
+            frase[y] = frase[y + 1];
+        }
+        frase[x - 1] = cambio;
+    }
 
     public static void main(String arg[]) {
-        char frase[] = { 'E', 'n', 'a', 'u', 'n', ' ', 'l', 'u', 'g', 'a', 'r', ' ', 'd', 'e', ' ', 'l', 'a', ' ', 'M',
+        char frase[] = { 'E', 'n', ' ', 'u', 'n', ' ', 'l', 'u', 'g', 'a', 'r', ' ', 'd', 'e', ' ', 'l', 'a', ' ', 'M',
                 'a', 'n', 'c', 'h', 'a', ' ' };
         int inicio = 0;
-        char last, cambio = ' ';
 
         for (int x = 0; x < frase.length; x++) {
 
             if (frase[x] == ' ') {
-                last = frase[(x - inicio)];
-                for (int y = (x - inicio); y < 0; y--) {
-                    cambio = frase[(inicio +y)];
-                    frase[(inicio +y)] = frase[(inicio +y -1)];
-                    frase[(inicio +y -1)] = cambio;
-                }
-                frase[inicio] = last;
+                derecha(inicio, frase, x);
+                izquierda(inicio, frase, x);
+                
                 inicio = x + 1;
 
             }
