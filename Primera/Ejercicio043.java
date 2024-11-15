@@ -14,7 +14,6 @@ public class Ejercicio043 {
                     min = y;
                 }
             }
-
             aux = lista[min];
             lista[min] = lista[x];
             lista[x] = aux;
