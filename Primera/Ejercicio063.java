@@ -29,7 +29,6 @@ public class Ejercicio063 {
         for (int x = 0; x < frase.length; x++) {
             frase2[x] = frase[x];
         }
-        System.out.println(frase2);
 
         cambiar(frase2, sustituto, 'u');
         System.out.println(frase2);

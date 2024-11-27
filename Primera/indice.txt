@@ -1,0 +1,23 @@
+%d para un numero
+
+18-Invertir valores vector
+38 - Vector de horizontal a vertical 
+39 - lo mismo pero sin vector auxiliar
+40 - Cambiar numeros diagonales
+42 - metodo burbuja
+43 - ordenacion directa
+44 - ordenacion parcial
+51 - factorial
+62 - sustituir una letra por un array
+64 - encontra un patron de array
+65 - mover de iqz a derecha
+67 - encontrar letra y añadir un array
+68 - duplicar frase
+69 - Invertir frase
+71 - encontrar patron y sustituir
+77 - añadir espacios a entre letras
+78 - comparar carateres 
+84 - Ordenar frase alfabeticamente
+87 - añadir una a por cada palabra
+88 - quiat espacios 
+91 - factorial recursivo 
