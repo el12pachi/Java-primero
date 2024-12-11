@@ -19,7 +19,7 @@ public class Casa {
         this.material = material;
         this.numHabitaciones = 1;
     }
-    public void getCaraterisicas() {
+    public void mostrar() {
         System.out.printf("%s numero de metros %.2f esta construida con %s y tiene %d habitaciones. \n",this.direccion, this.numMetros,this.material, this.numHabitaciones);
     }
     
