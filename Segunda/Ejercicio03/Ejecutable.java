@@ -1,10 +1,13 @@
 package Segunda.Ejercicio03;
 
-
-
 public class Ejecutable {
     public static void main(String[] args) {
-        Nif dni = new Nif(21748574);
-        System.out.println(dni.dni +"-"+ dni.letra);
+        Nif perosna1, persona2;
+        try{
+            perosna1 = new Nif(21748574,'A');
+            perosna1.mostarDni();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }
