@@ -1,6 +1,7 @@
 package Segunda.Ejercicio06;
 
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.Menu;
@@ -8,14 +9,31 @@ import java.awt.MenuBar;
 import java.awt.MenuItem;
 import java.awt.Panel;
 import java.awt.Event;
+import java.awt.Font;
 import java.awt.Button;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
 
 public class FrameApp extends Frame {
     MenuBar normal, alternativo;
     String tituloInicial;
+    int cursores[] = { Cursor.CROSSHAIR_CURSOR, Cursor.DEFAULT_CURSOR, Cursor.E_RESIZE_CURSOR, Cursor.HAND_CURSOR,
+            Cursor.MOVE_CURSOR, Cursor.NE_RESIZE_CURSOR, Cursor.N_RESIZE_CURSOR, Cursor.TEXT_CURSOR,
+            Cursor.WAIT_CURSOR };
+    int posCursor = 0;
+    Color colores[] = {Color.BLACK , Color.BLUE, Color.CYAN,  Color.DARK_GRAY, Color.GRAY, Color.LIGHT_GRAY};
+    int posColor = 0;
+    int posBackground= 0;
+    String fuentes[] = {"Helvetica","TimesRoman","Courier", "Dialog", "DialogInput","Arial"};
+    int postLetra = 0;
 
     public static void main(String[] args) {
         FrameApp app = new FrameApp();
+    }
+
+    public void paint(Graphics g){
+        g.drawString("Cambia el color al pulsar Foreground", 100, 150);
     }
 
     public FrameApp() {
@@ -83,8 +101,31 @@ public class FrameApp extends Frame {
                 } else {
                     this.setMenuBar(normal);
                 }
+                return true;
             }
 
+            if (ev.arg.equals("Resizable")) {
+                this.setResizable(!isResizable());
+                return true;
+            }
+            if (ev.arg.equals("Cursor")) {
+                this.setCursor(cursores[posCursor++ % cursores.length]);
+                return true;
+            }
+            if (ev.arg.equals("Foreground")) {
+                this.setForeground(colores[posColor++ % colores.length]);
+                return true;
+            }
+            if (ev.arg.equals("Background")) {
+                this.setBackground(colores[posBackground++ % colores.length]);
+                return true;
+            }
+            if (ev.arg.equals("Font")) {
+                Font letter = new Font(fuentes[postLetra++ % fuentes.length], Font.PLAIN, 12);
+                this.setFont(letter);
+                repaint();
+                return true;
+            }
         }
         return false;
     }
