@@ -1,5 +1,5 @@
 package Primera;
-
+//errorr
 public class BuscaMinas {
 
     public static int[][] generateTablet(int v1[][]) {
