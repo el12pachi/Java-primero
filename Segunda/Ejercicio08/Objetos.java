@@ -1,17 +1,23 @@
 package Segunda.Ejercicio08;
 
 import java.awt.Button;
+import java.awt.Canvas;
+import java.awt.Checkbox;
 import java.awt.Choice;
 import java.awt.Color;
 import java.awt.Event;
 import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.Label;
+import java.awt.List;
 import java.awt.Panel;
 import java.awt.TextArea;
 import java.awt.TextField;
+
+import javafx.scene.layout.Pane;
 
 public class Objetos extends Frame {
     TextArea textArea;
@@ -53,15 +59,22 @@ public class Objetos extends Frame {
 
         paneles[0][2].add(new MiBoton("Borrar", textArea));
 
-        String opciones[] = {"Si","No","Quizaz"};
-
+        String opciones[] = { "Si", "No", "Quizaz" };
         paneles[1][0].add(new MiChoice(opciones, textArea));
-        
 
-        principal.add(paneles[0][0]);
-        principal.add(paneles[0][1]);
-        principal.add(paneles[0][2]);
-        principal.add(paneles[1][0]);
+        String deportes[] = { "Futbol", "Baloncesto", "Tenis", "Balonmano" };
+        paneles[1][1].add(new MiList(deportes, textArea));
+
+        paneles[1][2].add(new MiCanva());
+
+        String alimentos[] = { "Patatas", "Cebolas", "Tomates", "Lechuga" };
+        paneles[2][0].add(new MiCheckBoxGroup(alimentos));
+
+        for (int x = 0; x < 3; x++) {
+            for (int y = 0; y < 3; y++) {
+                principal.add(paneles[x][y]);
+            }
+        }
 
         this.add("Center", principal);
 
@@ -109,16 +122,97 @@ class MiChoice extends Choice {
 
     public MiChoice(String opciones[], TextArea textArea) throws HeadlessException {
         super();
-        for(String x:opciones){
+        for (String x : opciones) {
             this.add(x);
         }
         this.textArea = textArea;
     }
 
     public boolean action(Event ev, Object obj) {
-       // System.out.println(ev.arg);
-        String texto = this.getSelectedItem();
-       textArea.setText(texto);
+        textArea.setText(this.getSelectedItem());
         return true;
     }
+}
+
+class MiList extends List {
+    TextArea textArea;
+
+    public MiList(String opciones[], TextArea textArea) throws HeadlessException {
+        super(opciones.length, true);
+        for (String x : opciones) {
+            this.add(x);
+        }
+        this.textArea = textArea;
+    }
+
+    public boolean handleEvent(Event ev) {
+        if (ev.id == Event.ACTION_EVENT) {
+            textArea.setText("asd");
+            return true;
+        } else if (ev.id == Event.LIST_SELECT) {
+            textArea.setText("Elemento Selecionado");
+            String[] elemnentos = this.getSelectedItems();
+            String text = "";
+            for (String x : elemnentos) {
+                text += x + "\n";
+            }
+            textArea.setText(text);
+            return true;
+        } else if (ev.id == Event.LIST_DESELECT) {
+            textArea.setText("Elemento Deselecionado");
+            return true;
+        }
+        return false;
+    }
+}
+
+class MiCanva extends Canvas {
+    int posy = 20;
+    int posx = 20;
+
+    public MiCanva() {
+        super();
+        this.setSize(75, 75);
+        this.setBackground(Color.yellow);
+        this.setForeground(Color.red);
+        this.setVisible(true);
+        ;
+    }
+
+    public void paint(Graphics g) {
+        g.fillRect(posx, posy, 5, 5);
+    }
+
+}
+
+class MiCheckBoxGroup extends Panel {
+    Checkbox checkBoxes[];
+    TextField resultado;
+
+    public MiCheckBoxGroup(String elementos[]){
+        super();
+        this.setLayout(new GridLayout(elementos.length +1,1));
+        checkBoxes = new Checkbox[elementos.length];
+        for(int x =0 ; x < elementos.length; x++){
+            checkBoxes[x] = new Checkbox(elementos[x]);
+            this.add(checkBoxes[x]);
+        }
+        resultado = new TextField("", 15);
+        this.add(resultado);
+    }
+
+    public boolean handleEvent(Event ev) {
+        if (ev.id == Event.ACTION_EVENT) {
+            String text = "";
+            for(Checkbox x:checkBoxes){
+                if (x.getState()) {
+                    text += x.getLabel() + " ";
+                }
+            }
+            resultado.setText(text);
+            return true;
+        } 
+        return false;
+    }
+ 
 }
