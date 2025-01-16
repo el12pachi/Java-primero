@@ -182,6 +182,7 @@ class MiCanva extends Canvas {
     public void paint(Graphics g) {
         g.fillRect(posx, posy, 5, 5);
     }
+    
 
 }
 
