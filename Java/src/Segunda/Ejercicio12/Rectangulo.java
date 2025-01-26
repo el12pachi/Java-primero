@@ -14,7 +14,7 @@ public class Rectangulo {
     public static final int IZQUIERDA = 2;
     public static final int DERECHA = 3;
     int direccion;
-    int x,inicialX, y,inicialY, ancho, largo;
+    int x, inicialX, y, inicialY, ancho, largo;
     Color color;
 
     public Rectangulo(int x, int y, int ancho, int largo, Color color) {
@@ -36,14 +36,14 @@ public class Rectangulo {
         switch (direccion) { //con este switch se produce el giro del bloque en sentido de las agujas del reloj.
             case ARRIBA:
                 y--;
-                if (y <= inicialY ) {
+                if (y <= inicialY) {
                     direccion = DERECHA;
                 }
                 break;
 
             case ABAJO:
                 y++;
-                if (y >= inicialY +20) {
+                if (y >= inicialY + 20) {
                     direccion = IZQUIERDA;
                 }
                 break;
@@ -57,12 +57,11 @@ public class Rectangulo {
 
             case IZQUIERDA:
                 x--;
-                if (x <= inicialX -20) {
+                if (x <= inicialX - 20) {
                     direccion = ARRIBA;
                 }
                 break;
         }
     }
+
 }
-
-
