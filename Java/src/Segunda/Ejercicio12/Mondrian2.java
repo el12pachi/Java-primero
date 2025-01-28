@@ -40,7 +40,7 @@ public class Mondrian2 extends Applet implements Runnable {
 
     public void init() {
         for (int x = 0; x < rectanguloVector.length; x++) {
-            rect[x]= new Rectangulo(rectanguloVector[x][0], rectanguloVector[x][1], rectanguloVector[x][2], rectanguloVector[x][3], colores[x]);
+            rect[x] = new Rectangulo(rectanguloVector[x][0], rectanguloVector[x][1], rectanguloVector[x][2], rectanguloVector[x][3], colores[x]);
         }
         imagen = this.createImage(300, 300);
         noseve = imagen.getGraphics();
@@ -52,14 +52,14 @@ public class Mondrian2 extends Applet implements Runnable {
     }
 
     public void paint(Graphics g) {
-                g.setColor(Color.BLACK);
-        g.fillRect(0, 0, 400, 400);
-        for(Rectangulo x:rect){
+        noseve.setColor(Color.BLACK);
+        noseve.fillRect(0, 0, 400, 400);
+        for (Rectangulo x : rect) {
             x.update();
-            x.paint(g);
+            x.paint(noseve);
         }
 
-       // g.drawImage(imagen, 0, 0, this);
+        g.drawImage(imagen, 0, 0, this);
 
     }
 
@@ -73,7 +73,7 @@ public class Mondrian2 extends Applet implements Runnable {
         do {
             repaint();
             try {
-                Thread.sleep(100);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
             }
         } while (true);
