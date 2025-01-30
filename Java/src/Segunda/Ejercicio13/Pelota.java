@@ -1,6 +1,7 @@
 package Segunda.Ejercicio13;
 
 import java.awt.Color;
+import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -25,17 +26,14 @@ public class Pelota extends Rectangle {
     }
 
     public void update() {
-        if (this.x >= (250 - this.radio) || this.x <= 0) {
+        if (this.x >= (300 - this.radio) || this.x <= 0) {
             velX *= -1;
-            System.out.println(velX);
         }
-        if (this.y >= (250 - this.radio) || this.y <= 0) {
+        if (this.y >= (300 - this.radio) || this.y <= 0) {
             velY *= -1;
-            System.out.println(velY);
         }
         this.x += velX;
         this.y += velY;
 
     }
-
 }
