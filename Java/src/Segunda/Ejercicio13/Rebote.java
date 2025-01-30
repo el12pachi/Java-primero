@@ -56,16 +56,12 @@ public class Rebote extends Applet implements Runnable {
 
     }
 
-    public boolean handleEvent(Event ev) {
-
-        if (ev.id == Event.MOUSE_DOWN) {
-            for (Pelota x : pelotas) {
-                if (x.contains(ev.x, ev.y))
-                        pelotas.remove(x);               
+    public boolean mouseDown(Event ev, int x, int y) {
+        for (Pelota j : pelotas) {
+            if (j.contains(x, y)) {
+                pelotas.remove(j);
             }
         }
-
-        return false;
+        return true;
     }
-
 }
