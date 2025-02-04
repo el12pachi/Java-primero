@@ -22,9 +22,9 @@ public class Arkanoid extends Applet implements Runnable {
         imagen = this.createImage(300, 300);
         noseve = imagen.getGraphics();
 
-        for (int i = 0; i < FILAS; i++) {
+        for (int i = 1; i <= FILAS; i++) {
             for (int j = 0; j < COLUMNAS; j++) {
-                ladrillos.add(new Ladrillo(j * 30, i * 12, colores[i]));
+                ladrillos.add(new Ladrillo(j * 30, i * 12, colores[i-1]));
             }
         }
         this.setSize(300, 300);
