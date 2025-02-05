@@ -9,9 +9,8 @@ public class Raqueta extends Rectangle {
     int velX;
 
     public Raqueta() {
-        super(125, 280, 50, 10); //parsear (convertir) -> (int)
-
-        velX = 5;
+        super(110, 250, 80, 10); //parsear (convertir) -> (int)
+        velX = 15;
     }
 
     public void paint(Graphics g) {
@@ -20,11 +19,12 @@ public class Raqueta extends Rectangle {
     }
 
     public void update(int dr) {
-        if (this.x <= (300 - 50) && dr == 1007) {
+        if (this.x <= (300 - 75) && dr == 1007) {
             this.x += velX;
-        } else if (dr == 1006 && this.x <= 0) {
+        }
+        if (dr == 1006 && this.x >= 0) {
             this.x -= velX;
         }
     }
-
+  
 }

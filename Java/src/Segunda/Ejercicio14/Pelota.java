@@ -3,17 +3,16 @@ package Segunda.Ejercicio14;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 public class Pelota extends Rectangle {
 
     int velX, velY, radio;
 
     public Pelota() {
-        super(150,150, 0, 0); //parsear (convertir) -> (int)
-        radio = 10;
-        this.setSize(radio, radio);
-        velX = (int) ((Math.random() * 11) - 5);
-        velY = (int) ((Math.random() * 11) - 5);
+        super(150, 150, 9, 9); //parsear (convertir) -> (int)
+        velX = (int) -3;
+        velY = (int) -2;
     }
 
     public void paint(Graphics g) {
@@ -21,15 +20,25 @@ public class Pelota extends Rectangle {
         g.fillOval(x, y, width, height);
     }
 
-    public void update() {
-        if (this.x >= (300 - this.radio) || this.x <= 0) {
+    public void update(Raqueta raqueta, ArrayList<Ladrillo> ladrillos) {
+        if (this.x >= (300 - width) || this.x <= 0) {
             velX *= -1;
         }
-        if (this.y >= (300 - this.radio) || this.y <= 0) {
+        if (this.y >= (300 - height) || this.y <= 0) {
             velY *= -1;
         }
         this.x += velX;
         this.y += velY;
+        if (raqueta.intersects(this)) {
+            this.velY = -this.velY;
+        };
 
+        for (Ladrillo x:ladrillos) {
+            if (x.intersects(this)) {
+                ladrillos.remove(x);
+                velY = -velY;
+                break;
+            }
+        }
     }
 }

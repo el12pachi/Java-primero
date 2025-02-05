@@ -6,7 +6,6 @@ import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Arkanoid extends Applet implements Runnable {
 
@@ -26,37 +25,46 @@ public class Arkanoid extends Applet implements Runnable {
         noseve = imagen.getGraphics();
         pelota = new Pelota();
         raqueta = new Raqueta();
-        for (int i = 1; i <= FILAS; i++) {
-            for (int j = 0; j < COLUMNAS; j++) {
-                ladrillos.add(new Ladrillo(j * 30, i * 12, colores[i - 1]));
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 10; j++) {
+                ladrillos.add(new Ladrillo((j * (28 + 2)) + 1, ((Ladrillo.ALTURA + 2) * i) + 10, colores[i]));
             }
         }
         this.setSize(300, 300);
     }
 
+    public void start() {
+        animacion = new Thread(this);
+        animacion.start();
+    }
+
     public void paint(Graphics g) {
         noseve.setColor(Color.BLACK);
         noseve.fillRect(0, 0, 300, 300);
+
         for (int i = 0; i < ladrillos.size(); i++) {
             ladrillos.get(i).paint(noseve);
         }
+
         pelota.paint(noseve);
         raqueta.paint(noseve);
+
         g.drawImage(imagen, 0, 0, this);
 
+    }
+
+    public void update(Graphics g) {
+        paint(g);
     }
 
     @Override
     public void run() {
         do {
+            pelota.update(raqueta, ladrillos);
             repaint();
-
             try {
-                System.out.println("asd");
-
                 Thread.sleep(10);
             } catch (InterruptedException e) {
-                                System.out.println("asd");
 
             }
         } while (true);

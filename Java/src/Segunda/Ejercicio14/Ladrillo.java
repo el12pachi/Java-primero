@@ -12,7 +12,7 @@ public class Ladrillo extends Rectangle{
     static final int ANCHURA = 28;
     int x, y ;
     public Ladrillo(int x, int y, Color color) {
-        super(x, y);
+        super(x, y, ANCHURA, ALTURA);
         this.x = x;
         this.y = y;
         this.color = color;
