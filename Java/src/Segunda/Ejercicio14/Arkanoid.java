@@ -17,6 +17,7 @@ public class Arkanoid extends Applet implements Runnable {
     Graphics noseve;
     Pelota pelota;
     Raqueta raqueta;
+    boolean continua;
 
     public void init() {
         Color colores[] = {Color.CYAN, Color.YELLOW, Color.ORANGE, Color.GREEN, Color.RED};
@@ -48,6 +49,9 @@ public class Arkanoid extends Applet implements Runnable {
 
         pelota.paint(noseve);
         raqueta.paint(noseve);
+        if (!continua) {
+            noseve.drawString("GAME OVER", 120, 140);
+        }
 
         g.drawImage(imagen, 0, 0, this);
 
@@ -60,8 +64,13 @@ public class Arkanoid extends Applet implements Runnable {
     @Override
     public void run() {
         do {
-            pelota.update(raqueta, ladrillos);
-            repaint();
+            continua = pelota.update(raqueta, ladrillos);
+            if (!continua) {
+                repaint();
+                animacion.stop();
+            } else {
+                repaint();
+            }
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {

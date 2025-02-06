@@ -20,25 +20,31 @@ public class Pelota extends Rectangle {
         g.fillOval(x, y, width, height);
     }
 
-    public void update(Raqueta raqueta, ArrayList<Ladrillo> ladrillos) {
+    public boolean update(Raqueta raqueta, ArrayList<Ladrillo> ladrillos) {
         if (this.x >= (300 - width) || this.x <= 0) {
             velX *= -1;
         }
-        if (this.y >= (300 - height) || this.y <= 0) {
+        if (this.y <= 0) {
             velY *= -1;
         }
+        if (this.y >= (300 - height)) {
+            return false;
+        }
+        
         this.x += velX;
         this.y += velY;
         if (raqueta.intersects(this)) {
             this.velY = -this.velY;
         };
 
-        for (Ladrillo x:ladrillos) {
+        for (Ladrillo x : ladrillos) {
             if (x.intersects(this)) {
                 ladrillos.remove(x);
                 velY = -velY;
                 break;
             }
         }
+        
+        return true;
     }
 }
