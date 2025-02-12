@@ -1,29 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Segunda.Ejercicio15;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class Columna {
 
-    final static int ESPACIO = 75;
-    final static int[] RANGO = {20, 125};
-    Rectangle rect1, rect2;
+    Rectangle top;
+    Rectangle bottom;
 
     public Columna() {
-        int altura = (int) ((Math.random() * (RANGO[1] - RANGO[0])) + RANGO[0]);
-        rect1 = new Rectangle(0, 0, 30, altura);
-        rect2 = new Rectangle(0, altura + ESPACIO , 30, 300 + ESPACIO - altura);
+        int alturaRandom = (int) ((Math.random() * 105) + 20);
+        top = new Rectangle(300 - 30, 0, 30, alturaRandom);
+        bottom = new Rectangle(300 - 30, alturaRandom + 75, 30, 300 - 75 - alturaRandom);
+    }
+
+    public void paint(Graphics g) {
+        g.setColor(Color.green);
+        g.fillRect(top.x, top.y, top.width, top.height);
+        g.fillRect(bottom.x, bottom.y, bottom.width, bottom.height);
 
     }
-    
-    public void paint(Graphics g){
-        g.fillRect(rect1.x, rect1.y, rect1.width, rect1.height);
-        g.fillRect(rect2.x, rect2.y, rect2.width, rect2.height);
+
+    public boolean update() {
+        top.x = top.x - 7;
+        bottom.x = bottom.x - 7;
+
+
+        return true;
     }
 
 }
