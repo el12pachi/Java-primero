@@ -69,11 +69,10 @@ public class Juego extends Applet implements Runnable {
             }
             for (Marciano x : marcianos) {
                 x.update();
-                if(!continua && x.over()){
+                if (!continua && x.over()) {
                     continua = true;
                 }
             }
-         
 
             if (continua) {
                 repaint();
@@ -95,11 +94,15 @@ public class Juego extends Applet implements Runnable {
     }
 
     public boolean keyDown(Event ev, int tecla) {
-        pistola.update(tecla);
         if (tecla == 32) {
             balas.add(new Bala(pistola.x, pistola.y));
             System.out.println(ev.key);
         }
+        return true;
+    }
+
+    public boolean mouseMove(Event e, int x, int y) {
+        pistola.update(x);
         return true;
     }
 

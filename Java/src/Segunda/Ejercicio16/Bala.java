@@ -9,7 +9,7 @@ public class Bala extends Rectangle {
     int velY = 15;
 
     public Bala(int x, int y) {
-        super(x, y, 10, 10);
+        super(x, 260, 5, 10);
 
     }
 

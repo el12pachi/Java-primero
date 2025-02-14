@@ -1,6 +1,4 @@
-
 package Segunda.Ejercicio16;
-
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -20,13 +18,15 @@ public class Gun extends Rectangle {
         g.fillRect(x, y, width, height);
     }
 
-    public void update(int dr) {
-        if (this.x <= (300 - this.width) && dr == 1007) {
-            this.x += velX;
+    public void update(int postX) {
+        postX -= width / 2;
+        this.x = postX;
+        if (this.x >= (300 - this.width)) {
+            this.x = (300 - this.width);
+        } else if (this.x <= 0) {
+            this.x = 0;
         }
-        if (dr == 1006 && this.x >= 0) {
-            this.x -= velX;
-        }
+
     }
-  
+
 }
