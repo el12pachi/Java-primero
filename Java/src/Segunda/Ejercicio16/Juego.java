@@ -11,7 +11,7 @@ public class Juego extends Applet implements Runnable {
 
     ArrayList<Bala> balas;
     ArrayList<Marciano> marcianos;
-    int contador = 0;
+    int contador = 250;
     Thread animacion;
     Image imagen;
     Graphics noseve;
@@ -67,6 +67,7 @@ public class Juego extends Applet implements Runnable {
                     }
                 }
             }
+            
             for (Marciano x : marcianos) {
                 x.update();
                 if (!continua && x.over()) {
@@ -78,7 +79,7 @@ public class Juego extends Applet implements Runnable {
                 repaint();
                 animacion.stop();
             }
-            if (contador >= 300) {
+            if (contador >= 50) {
                 marcianos.add(new Marciano());
                 contador = 0;
             }
@@ -93,11 +94,10 @@ public class Juego extends Applet implements Runnable {
 
     }
 
-    public boolean keyDown(Event ev, int tecla) {
-        if (tecla == 32) {
-            balas.add(new Bala(pistola.x, pistola.y));
-            System.out.println(ev.key);
-        }
+    public boolean mouseDown(Event ev, int x,int y) {
+
+        balas.add(new Bala(pistola.x, pistola.y));
+
         return true;
     }
 
