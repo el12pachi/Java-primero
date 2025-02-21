@@ -19,13 +19,13 @@ public class Juego extends Applet implements Runnable {
     Thread animacion;
     Image imagen;
     Graphics noseve;
+    Rana pj;
 
     public void init() {
-        imagen = this.createImage(400, 400);
+        imagen = this.createImage(700, 400);
         noseve = imagen.getGraphics();
-
-        this.setSize(400, 400);
-
+        pj = new Rana();
+        this.setSize(700, 400);
     }
 
     public void start() {
@@ -34,14 +34,14 @@ public class Juego extends Applet implements Runnable {
     }
 
     public void paint(Graphics g) {
-        noseve.setColor(Color.GREEN);
-        noseve.fillRect(0, 0, 400, 400);
+        noseve.setColor(Color.PINK);
+        noseve.fillRect(0, 0, 700, 400);
         noseve.setColor(Color.BLACK);
-        noseve.fillRect(0, 75, 400, 250);
+        noseve.fillRect(0, 75, 700, 250);
         noseve.setColor(Color.WHITE);
-        noseve.fillRect(0, 185, 400, 30);
-        
-        
+        noseve.drawLine(0, 200, 700, 200);
+       // noseve.fillRect(0, 185, 400, 30);
+        pj.paint(noseve);
         g.drawImage(imagen, 0, 0, this);
     }
 
@@ -65,10 +65,7 @@ public class Juego extends Applet implements Runnable {
     }
 
     public boolean keyDown(Event ev, int tecla) {
-        if (tecla == 32) {
-            //pj.saltar();
-        }
-
+        pj.update(tecla);
         return true;
     }
 }
