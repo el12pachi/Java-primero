@@ -24,7 +24,11 @@ public class Juego extends Applet implements Runnable {
         balas = new ArrayList<Bala>();
         marcianos = new ArrayList<Marciano>();
         pistola = new Gun();
+        for (int x = 0; x < 10; x++) {
+            marcianos.add(new Marciano());
+        }
         this.setSize(300, 300);
+
     }
 
     public void start() {
@@ -55,6 +59,8 @@ public class Juego extends Applet implements Runnable {
     @Override
     public void run() {
         do {
+            boolean salir = false;
+
             for (Bala x : balas) {
                 if (x.update()) {
                     balas.remove(x);
@@ -63,11 +69,16 @@ public class Juego extends Applet implements Runnable {
                 for (Marciano y : marcianos) {
                     if (x.intersects(y)) {
                         marcianos.remove(y);
+                        salir = true;
+                        break;
+                    }
+                    if (salir) {
+                        balas.remove(x);
                         break;
                     }
                 }
             }
-            
+
             for (Marciano x : marcianos) {
                 x.update();
                 if (!continua && x.over()) {
@@ -79,7 +90,7 @@ public class Juego extends Applet implements Runnable {
                 repaint();
                 animacion.stop();
             }
-            if (contador >= 50) {
+            if (contador >= 100) {
                 marcianos.add(new Marciano());
                 contador = 0;
             }
@@ -94,7 +105,7 @@ public class Juego extends Applet implements Runnable {
 
     }
 
-    public boolean mouseDown(Event ev, int x,int y) {
+    public boolean mouseDown(Event ev, int x, int y) {
 
         balas.add(new Bala(pistola.x, pistola.y));
 

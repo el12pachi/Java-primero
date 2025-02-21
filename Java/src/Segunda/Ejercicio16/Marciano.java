@@ -6,11 +6,13 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 
 public class Marciano extends Rectangle {
+
     static final Color colores[] = {Color.BLUE, Color.CYAN, Color.GRAY, Color.MAGENTA, Color.ORANGE, Color.WHITE};
     Color color;
-    static final int ALTURA = 20;
-    static final int ANCHURA = 10;
-    int velX;  
+    static final int ALTURA = 15;
+    static final int ANCHURA = 40;
+    int velX;
+
     public Marciano() {
         super((int) ((Math.random() * 250)), (int) ((Math.random() * 100)), ANCHURA, ALTURA);
         color = colores[(int) ((Math.random() * colores.length))];
@@ -23,8 +25,11 @@ public class Marciano extends Rectangle {
     }
 
     public void update() {
-        this.y += velX;
-        if((x<=0)||(x>=(300-width)))
+        this.x += velX;
+        if ((x <= 0) || (x >= (300 - width))) {
+            velX *= -1;
+        }
+
     }
 
     public boolean over() {
