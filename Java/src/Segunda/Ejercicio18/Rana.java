@@ -9,7 +9,7 @@ public class Rana extends Rectangle {
     public static final int VEL = 3;
 
     public Rana() {
-        super(185, 370, 30, 40);
+        super(335, 360, 30, 40);
     }
 
     public void paint(Graphics g) {
