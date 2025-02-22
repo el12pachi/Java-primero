@@ -15,12 +15,13 @@ import java.util.ArrayList;
 public class Juego extends Applet implements Runnable {
 
     int contador = 1000;
-    int tiempo = 150;
+    int tiempo = 50;
     Thread animacion;
     Image imagen;
     Graphics noseve;
     Rana pj;
     ArrayList<Coche> coches;
+    boolean continua = false;
 
     public void init() {
         imagen = this.createImage(700, 400);
@@ -46,7 +47,11 @@ public class Juego extends Applet implements Runnable {
             x.paint(noseve);
         }
         pj.paint(noseve);
+        if (continua) {
+            noseve.drawString("GAME OVER", 350, 200);
+        }
         g.drawImage(imagen, 0, 0, this);
+
     }
 
     public void update(Graphics g) {
@@ -57,14 +62,26 @@ public class Juego extends Applet implements Runnable {
     public void run() {
         do {
             for (Coche x : coches) {
-                x.update();
+                if (x.intersects(pj)) {
+                    continua = true;
+                }
+                if (x.update()) {
+                    coches.remove(x);
+                    break;
+                }
             }
             if (tiempo <= contador) {
                 coches.add(new Coche());
                 contador = 0;
             }
             contador++;
+            if (continua) {
+                repaint();
+                animacion.stop();
+            }
+
             repaint();
+
             try {
                 Thread.sleep(30);
             } catch (InterruptedException e) {

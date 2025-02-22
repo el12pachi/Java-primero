@@ -30,8 +30,14 @@ public class Coche extends Rectangle {
     public boolean update() {
         if (direccion) {
             x -= vel;
+            if (x <= 0) {
+                return true;
+            }
         } else {
             x += vel;
+            if (x >= 700) {
+                return true;
+            }
         }
         //y -= velY;
         // if(y+height < 0) return true;
