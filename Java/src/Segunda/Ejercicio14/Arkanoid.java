@@ -72,7 +72,7 @@ public class Arkanoid extends Applet implements Runnable {
                 repaint();
             }
             try {
-                Thread.sleep(10);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
 
             }
