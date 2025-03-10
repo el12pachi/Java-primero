@@ -1,26 +1,30 @@
-package Segunda.sinTerminal;
+package Tercera.Ejercicio01;
 
 import java.applet.Applet;
 import java.awt.Color;
-import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Image;
 
-public class FlappyBird extends Applet implements Runnable {
+public class Caminar extends Applet implements Runnable {
 
-    Pajaro pajaro;
+    public static final int TIEMPO = 50;
+    Thread animacion;
     Image imagen;
     Graphics noseve;
-    Thread animacion;
-    Columna pintar;
+    Image img1;
 
     public void init() {
         imagen = this.createImage(300, 300);
         noseve = imagen.getGraphics();
-        this.setSize(300, 300);
-        pintar = new Columna();
-        pajaro = new Pajaro();
 
+        img1 = getImage(getCodeBase(), "Tercera/Ejercicio01/Sprites/Guerrillero/g1.gif");//
+
+        this.setSize(300, 300);
+
+    }
+
+    public void update(Graphics g) {
+        paint(g);
     }
 
     public void start() {
@@ -32,35 +36,23 @@ public class FlappyBird extends Applet implements Runnable {
     public void paint(Graphics g) {
         noseve.setColor(Color.BLACK);
         noseve.fillRect(0, 0, 300, 300);
-        pajaro.paint(noseve);
-        pintar.paint(noseve);
+
+        noseve.drawImage(img1, 0, 0, 200, 250, this);
+
         g.drawImage(imagen, 0, 0, this);
 
-    }
-
-    public void update(Graphics g) {
-        paint(g);
     }
 
     @Override
     public void run() {
         do {
-            pajaro.update();
-            repaint();
 
+            repaint();
             try {
-                Thread.sleep(50);
+                Thread.sleep(TIEMPO);
             } catch (InterruptedException ex) {
             }
-
         } while (true);
-
     }
 
-    public boolean keyDown(Event ev, int tecla) {
-        if (tecla == Event.UP) {
-            pajaro.saltar();
-        }
-        return true;
-    }
 }
