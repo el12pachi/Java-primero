@@ -23,7 +23,7 @@ public class Puzle extends Applet {
     public void init() {
         imagen = this.createImage(700, 500);
         noseve = imagen.getGraphics();
-        tablero = new Tablero(60, 5, 5);
+        tablero = new Tablero(Pieza.DIMENSION, FILAS, FILAS);
         imagenes = new Image[PIEZAS];
         piezas = new Pieza[PIEZAS];
         for (int i = 0; i < imagenes.length; i++) {
@@ -64,15 +64,16 @@ public class Puzle extends Applet {
     }
 
     public boolean mouseUp(Event ev, int x, int y) {
-        tablero.comprobar(actual);
+        tablero.comprobar(actual, x, y);
         actual = null;
         repaint();
         return true;
     }
 
     public boolean mouseDrag(Event ev, int x, int y) {
-        if(actual == null)
+        if (actual == null) {
             return false;
+        }
         actual.mover(x, y);
         repaint();
         return true;

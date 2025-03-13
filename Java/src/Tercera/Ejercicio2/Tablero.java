@@ -27,12 +27,13 @@ public class Tablero {
     public void paint(Graphics g) {
         g.setColor(Color.GRAY);
         for (Rectangle z : casillas) {
-            g.fillRect(z.x, z.y, z.width, z.height);
+            g.drawRect(z.x, z.y, z.width, z.height);
         }
     }
 
-    public void comprobar(Pieza pieza) {
-        if (pieza.intersects(casillas[pieza.pos])) {
+    public void comprobar(Pieza pieza, int x, int y) {
+        //if (pieza.intersects(casillas[pieza.pos])) {
+        if (pieza.contains(x,y) && pieza.intersects(casillas[pieza.pos])) {
             pieza.x = casillas[pieza.pos].x;
             pieza.y = casillas[pieza.pos].y;
             pieza.bloqueado = true;
