@@ -14,6 +14,14 @@ public class Casilla extends Rectangle {
     private boolean tapada;
     private int alrededor;
 
+    public int getAlrededor() {
+        return alrededor;
+    }
+
+    public void setAlrededor(int alrededor) {
+        this.alrededor = alrededor;
+    }
+
     public Casilla(int posX, int posY, Image rev) {
         super(posX, posY, TAM, TAM);
         reverso = rev;
@@ -45,6 +53,7 @@ public class Casilla extends Rectangle {
         } else if (mina != null) {
             g.drawImage(mina, x, y, width, height, ap);
         } else {
+
             g.drawString("" + alrededor, x + 4, y + 13);
         }
 
