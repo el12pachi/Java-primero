@@ -11,7 +11,7 @@ import java.util.Collections;
 public class BuscaMinas extends Applet {
 
     public static final int DIM = 10;
-    public static final int CANT =  10;
+    public static final int CANT = 10;
     Image imagen;
     Graphics noseve;
     Image mina;
@@ -35,7 +35,7 @@ public class BuscaMinas extends Applet {
 
         Collections.shuffle(minas);
         for (int x = 0; x < CANT; x++) {
-            casillas[minas.get(x) / 10][minas.get(x) % 10].setMina(mina);
+            casillas[minas.get(x) / DIM][minas.get(x) % DIM].setMina(mina);
         }
         this.setSize(500, 500);
 
@@ -59,6 +59,12 @@ public class BuscaMinas extends Applet {
     }
 
     public boolean mouseDown(Event ev, int x, int y) {
+        mina(x, y);
+        repaint();
+        return true;
+    }
+
+    private void mina(int x, int y) {
         for (int j = 0; j < DIM; j++) {
             for (int z = 0; z < DIM; z++) {
                 if (casillas[j][z].contains(x, y)) {
@@ -68,8 +74,6 @@ public class BuscaMinas extends Applet {
 
             }
         }
-        repaint();
-        return true;
     }
 
     public void viewAlrededor(int col, int fil) {
