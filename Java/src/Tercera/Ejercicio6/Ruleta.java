@@ -10,13 +10,7 @@ import java.awt.Color;
 import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.util.ArrayList;
-import java.util.Collections;
 
-/**
- *
- * @author el12p
- */
 public class Ruleta extends Applet {
 
     public static final int FILAS = 12;
@@ -25,20 +19,30 @@ public class Ruleta extends Applet {
     Graphics noseve;
     Casilla casillas[][];
     public int rojo[] = {1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36};
-    Ficha ficha;
+    public int valores[] = {1, 5, 10, 25, 50, 100, 500, 1000, 5000, 10000};
+
+    Ficha fichas[];
 
     public void init() {
         imagen = this.createImage(900, 900);
         noseve = imagen.getGraphics();
         casillas = new Casilla[FILAS][COLUMNAS];
-        ficha = new Ficha(300, 300);
+        java.util.ArrayList<Integer> lRojos = new java.util.ArrayList<Integer>();
+
+        for (int number : rojo) {
+            lRojos.add(number);
+        }
+
+        fichas = new Ficha[10];
+        for (int x = 0; x < valores.length; x++) {
+            fichas[x] = new Ficha(x * 100, 300, getImage(getCodeBase(), "Tercera/Ejercicio6/Fichas/ficha" + (x+1) + ".png"), valores[x]);
+        }
+
         for (int x = 0, n = 1; x < FILAS; x++) {
             for (int y = 0; y < COLUMNAS; y++) {
                 Color color = Color.BLACK;
-                for (int number : rojo) {
-                    if (number == n) {
-                        color = Color.red;
-                    }
+                if (lRojos.contains(n)) {
+                    color = Color.RED;
                 }
                 casillas[x][y] = new Casilla(Casilla.DIM * x, Casilla.DIM * y, n++, color);
             }
@@ -60,16 +64,19 @@ public class Ruleta extends Applet {
                 casillas[x][y].paint(noseve);
             }
         }
-        ficha.paint(noseve);
+
+        for (Ficha x : fichas) {
+            x.paint(noseve, this);
+        }
         g.drawImage(imagen, 0, 0, this);
     }
 
     public boolean mouseUp(Event ev, int x, int y) {
         for (int j = 0; j < casillas.length; j++) {
             for (int i = 0; i < casillas[0].length; i++) {
-                if (casillas[j][i].intersects(ficha)) {
-                    System.out.println(casillas[j][i].valor);
-                };
+                //if (casillas[j][i].intersects(ficha)) {
+                //  System.out.println(casillas[j][i].valor);
+                //  };
             }
         }
         repaint();
@@ -77,12 +84,12 @@ public class Ruleta extends Applet {
     }
 
     public boolean mouseDown(Event ev, int x, int y) {
-        ficha.mover(x, y);
+        // ficha.mover(x, y);
         return true;
     }
 
     public boolean mouseDrag(Event ev, int x, int y) {
-        ficha.mover(x, y);
+        // ficha.mover(x, y);
         repaint();
         return true;
     }
