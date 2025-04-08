@@ -13,7 +13,7 @@ import java.awt.Rectangle;
 
 public class Ficha extends Rectangle {
 
-    public static final int DIM = 100;
+    public static final int DIM = 50;
     int valor;
     Image src;
 

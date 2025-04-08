@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.util.ArrayList;
 
 public class Ruleta extends Applet {
 
@@ -20,14 +21,16 @@ public class Ruleta extends Applet {
     Casilla casillas[][];
     public int rojo[] = {1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36};
     public int valores[] = {1, 5, 10, 25, 50, 100, 500, 1000, 5000, 10000};
-
     Ficha fichas[];
+    Ficha activa;
+    ArrayList<Ficha> jugada;
 
     public void init() {
         imagen = this.createImage(900, 900);
         noseve = imagen.getGraphics();
         casillas = new Casilla[FILAS][COLUMNAS];
-        java.util.ArrayList<Integer> lRojos = new java.util.ArrayList<Integer>();
+        ArrayList<Integer> lRojos = new ArrayList<Integer>();
+        ArrayList<Ficha> jugada = new ArrayList<Ficha>();
 
         for (int number : rojo) {
             lRojos.add(number);
@@ -35,7 +38,7 @@ public class Ruleta extends Applet {
 
         fichas = new Ficha[10];
         for (int x = 0; x < valores.length; x++) {
-            fichas[x] = new Ficha(x * 100, 300, getImage(getCodeBase(), "Tercera/Ejercicio6/Fichas/ficha" + (x+1) + ".png"), valores[x]);
+            fichas[x] = new Ficha(x * 100, 300, getImage(getCodeBase(), "Tercera/Ejercicio6/Fichas/ficha" + (x + 1) + ".png"), valores[x]);
         }
 
         for (int x = 0, n = 1; x < FILAS; x++) {
@@ -57,7 +60,7 @@ public class Ruleta extends Applet {
 
     public void paint(Graphics g) {
         noseve.setColor(Color.WHITE);
-        noseve.fillRect(0, 0, 700, 700);
+        noseve.fillRect(0, 0, 900, 900);
         noseve.setColor(Color.GRAY);
         for (int x = 0, n = 1; x < FILAS; x++) {
             for (int y = 0; y < COLUMNAS; y++) {
@@ -79,17 +82,26 @@ public class Ruleta extends Applet {
                 //  };
             }
         }
+        activa = null;
         repaint();
         return true;
     }
 
     public boolean mouseDown(Event ev, int x, int y) {
-        // ficha.mover(x, y);
+        for (Ficha f : fichas) {
+            if (f.contains(x, y)) {
+                jugada.add(new Ficha(f.x, f.y, f.src, f.valor));
+                activa = jugada.get(jugada.size() - 1);
+            }
+        }
         return true;
     }
 
     public boolean mouseDrag(Event ev, int x, int y) {
-        // ficha.mover(x, y);
+        if (activa == null) {
+            return false;
+        }
+        activa.mover(x, y);
         repaint();
         return true;
     }
