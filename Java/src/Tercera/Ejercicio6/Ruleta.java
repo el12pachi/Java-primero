@@ -1,57 +1,71 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Tercera.Ejercicio6;
 
 import java.applet.Applet;
+import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Panel;
 import java.util.ArrayList;
 
 public class Ruleta extends Applet {
 
     public static final int FILAS = 12;
     public static final int COLUMNAS = 3;
+    public static final int NUMJUGADAS = 10;
     Image imagen;
     Graphics noseve;
     Casilla casillas[][];
-    public int rojo[] = {1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36};
+    public int rojos[] = {1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36};
     public int valores[] = {1, 5, 10, 25, 50, 100, 500, 1000, 5000, 10000};
-    Ficha fichas[];
+    ArrayList<Ficha> fichas[];
     Ficha activa;
-    ArrayList<Ficha> jugada;
+    Image imagenes[];
+    Button boton;
+    int suerte:
 
     public void init() {
-        imagen = this.createImage(900, 900);
+        imagen = this.createImage(700, 800);
         noseve = imagen.getGraphics();
+
+        Panel panel = new Panel();
+        boton = new Button("Jugar !");
+        panel.add(boton);
+        this.setLayout(new BorderLayout());
+        this.add("North", panel);
+        
         casillas = new Casilla[FILAS][COLUMNAS];
-        ArrayList<Integer> lRojos = new ArrayList<Integer>();
-        ArrayList<Ficha> jugada = new ArrayList<Ficha>();
-
-        for (int number : rojo) {
-            lRojos.add(number);
+        java.util.ArrayList<Integer> lRojos = new java.util.ArrayList<Integer>();
+        for (int i = 0; i < rojos.length; i++) {
+            lRojos.add(new Integer(rojos[i]));
         }
 
-        fichas = new Ficha[10];
-        for (int x = 0; x < valores.length; x++) {
-            fichas[x] = new Ficha(x * 100, 300, getImage(getCodeBase(), "Tercera/Ejercicio6/Fichas/ficha" + (x + 1) + ".png"), valores[x]);
-        }
-
-        for (int x = 0, n = 1; x < FILAS; x++) {
-            for (int y = 0; y < COLUMNAS; y++) {
-                Color color = Color.BLACK;
-                if (lRojos.contains(n)) {
-                    color = Color.RED;
+        for (int i = 0; i < casillas.length; i++) {
+            for (int j = 0; j < casillas[i].length; j++) {
+                if (lRojos.contains(new Integer((i * COLUMNAS) + j + 1))) {
+                    casillas[i][j] = new Casilla((j * Casilla.DIM) + 30, (i * Casilla.DIM) + 50, (i * COLUMNAS) + j + 1, Color.RED);
+                } else {
+                    casillas[i][j] = new Casilla((j * Casilla.DIM) + 30, (i * Casilla.DIM) + 50, (i * COLUMNAS) + j + 1, Color.BLACK);
                 }
-                casillas[x][y] = new Casilla(Casilla.DIM * x, Casilla.DIM * y, n++, color);
             }
         }
-        this.setSize(900, 500);
 
+        imagenes = new Image[NUMJUGADAS];
+        for (int i = 0; i < NUMJUGADAS; i++) {
+            imagenes[i] = getImage(getCodeBase(), "Tercera/Ejercicio6/Fichas/ficha" + (i + 1) + ".png");
+        }
+
+        fichas = new ArrayList[NUMJUGADAS];
+        for (int i = 0; i < NUMJUGADAS; i++) {
+            fichas[i] = new ArrayList<Ficha>();
+            fichas[i].add(new Ficha(400, 50 + (i * Ficha.DIMENSION), valores[i], imagenes[i]));
+        }
+        
+        
+
+        this.setSize(700, 800);
     }
 
     public void update(Graphics g) {
@@ -59,50 +73,58 @@ public class Ruleta extends Applet {
     }
 
     public void paint(Graphics g) {
-        noseve.setColor(Color.WHITE);
-        noseve.fillRect(0, 0, 900, 900);
-        noseve.setColor(Color.GRAY);
-        for (int x = 0, n = 1; x < FILAS; x++) {
-            for (int y = 0; y < COLUMNAS; y++) {
-                casillas[x][y].paint(noseve);
+        noseve.setColor(Color.GREEN);
+        noseve.fillRect(0, 0, 700, 800);
+
+        for (int i = 0; i < casillas.length; i++) {
+            for (int j = 0; j < casillas[i].length; j++) {
+                casillas[i][j].paint(noseve);
             }
         }
 
-        for (Ficha x : fichas) {
-            x.paint(noseve, this);
+        for (int i = 0; i < NUMJUGADAS; i++) {
+            for(Ficha ficha : fichas[i]){
+                ficha.paint(noseve, this);
+            }
         }
+
         g.drawImage(imagen, 0, 0, this);
     }
 
-    public boolean mouseUp(Event ev, int x, int y) {
-        for (int j = 0; j < casillas.length; j++) {
-            for (int i = 0; i < casillas[0].length; i++) {
-                //if (casillas[j][i].intersects(ficha)) {
-                //  System.out.println(casillas[j][i].valor);
-                //  };
-            }
-        }
-        activa = null;
-        repaint();
-        return true;
-    }
-
     public boolean mouseDown(Event ev, int x, int y) {
-        for (Ficha f : fichas) {
-            if (f.contains(x, y)) {
-                jugada.add(new Ficha(f.x, f.y, f.src, f.valor));
-                activa = jugada.get(jugada.size() - 1);
+        for (int i = 0; i < NUMJUGADAS; i++) {
+            for(Ficha ficha : fichas[i]){
+               if(ficha.contains(x, y)){
+                   activa = ficha;
+                   fichas[i].add(new Ficha(400, 50 + (i * Ficha.DIMENSION), valores[i], imagenes[i]));
+                   break;
+               }
             }
-        }
+            }
+        
+
         return true;
     }
 
     public boolean mouseDrag(Event ev, int x, int y) {
-        if (activa == null) {
-            return false;
+        if (activa != null) {
+            activa.update(x, y);
+            repaint();
         }
-        activa.mover(x, y);
-        repaint();
+ 
+        return true;
+    }
+
+    public boolean mouseUp(Event ev, int x, int y) {
+        activa.cargarApostados(casillas);
+        activa = null;
+        return true;
+    }
+    
+    public boolean action(Event ev, Object obj){
+        if(ev.target instanceof Button){
+            this.suerte = (int)(Math.random() * 37); 
+        }
         return true;
     }
 }
