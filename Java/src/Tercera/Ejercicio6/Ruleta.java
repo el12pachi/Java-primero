@@ -24,7 +24,8 @@ public class Ruleta extends Applet {
     Ficha activa;
     Image imagenes[];
     Button boton;
-    int suerte:
+    int suerte;
+    int jugadas[];
 
     public void init() {
         imagen = this.createImage(700, 800);
@@ -35,7 +36,7 @@ public class Ruleta extends Applet {
         panel.add(boton);
         this.setLayout(new BorderLayout());
         this.add("North", panel);
-        
+        jugadas = new int[10];
         casillas = new Casilla[FILAS][COLUMNAS];
         java.util.ArrayList<Integer> lRojos = new java.util.ArrayList<Integer>();
         for (int i = 0; i < rojos.length; i++) {
@@ -124,6 +125,7 @@ public class Ruleta extends Applet {
     public boolean action(Event ev, Object obj){
         if(ev.target instanceof Button){
             this.suerte = (int)(Math.random() * 37); 
+            
         }
         return true;
     }
