@@ -7,13 +7,13 @@ import java.awt.Rectangle;
 
 public class Ficha extends Rectangle {
 
-    public static final int DIMENSION = 60;
-    int valor;
+    public static final int DIM = 60;
+    private int valor;
     Image imagen;
     java.util.ArrayList<Integer> numerosApostados;
 
     public Ficha(int posX, int posY, int v, Image img) {
-        super(posX, posY, DIMENSION, DIMENSION);
+        super(posX, posY, DIM, DIM);
         imagen = img;
         valor = v;
         numerosApostados = new java.util.ArrayList<Integer>();
@@ -24,10 +24,16 @@ public class Ficha extends Rectangle {
     }
 
     public void update(int posX, int posY) {
-        x = posX - (DIMENSION / 2);
-        y = posY - (DIMENSION / 2);
+        x = posX - (DIM / 2);
+        y = posY - (DIM / 2);
     }
 
+    public int getValor() {
+        return valor;
+    }
+
+    
+    
     public void cargarApostados(Casilla casillas[][]) {
         numerosApostados.clear(); //vacia la lista antes de volverla a cargar
         for(int i = 0; i < casillas.length; i++){
