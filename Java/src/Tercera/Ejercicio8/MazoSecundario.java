@@ -13,7 +13,7 @@ public class MazoSecundario {
 
     public static final int POSICIONX = 110;
     public static final int POSICIONY = 20;
-    ArrayList<Carta> cartas;
+    private ArrayList<Carta> cartas;
 
     public MazoSecundario() {
         cartas = new ArrayList<Carta>();
@@ -27,7 +27,7 @@ public class MazoSecundario {
         for (Carta carta : cartas) {
             carta.paint(g, a);
         }
-        
+
     }
 
     public void recolocar() {
@@ -35,10 +35,22 @@ public class MazoSecundario {
     }
 
     public Carta extraer() {
+        if (cartas.isEmpty()) {
+            return null;
+        }
         return cartas.get(cartas.size() - 1);
     }
 
     public void eliminar() {
         cartas.remove(cartas.size() - 1);
     }
+
+    public ArrayList<Carta> getCartas() {
+        return cartas;
+    }
+
+    public void setCartas(ArrayList<Carta> cartas) {
+        this.cartas = cartas;
+    }
+
 }

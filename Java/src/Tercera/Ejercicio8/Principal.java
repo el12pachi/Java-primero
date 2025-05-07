@@ -2,6 +2,7 @@ package Tercera.Ejercicio8;
 
 import java.applet.Applet;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Principal extends Applet {
 
@@ -17,6 +18,7 @@ public class Principal extends Applet {
     Rectangle rectangulo;
     Carta activa;
     MazoPalo mazoPalos[];
+    MazoJuego mazoJuegos[];
 
     public void init() {
         imagen = this.createImage(700, 800); // Crea una imagen para el tablero
@@ -34,19 +36,30 @@ public class Principal extends Applet {
         for (int i = 0; i < NUM_PALOS; i++) {
             mazoPalos[i] = new MazoPalo((i * (Carta.ANCHURA + 25) + 250));
         }
+        mazoJuegos = new MazoJuego[7];
+
+        for (int i = 0; i < mazoJuegos.length; i++) {
+            mazoJuegos[i] = new MazoJuego((i * (Carta.ANCHURA + 25) + 25));
+            for (int x = 0; x < (i + 1); x++) {
+                mazoJuegos[i].anadirPrincipio(baraja.sacarcarta(), x * 25);
+            }
+        }
         this.setSize(700, 800);
     }
 
     public void paint(Graphics g) {
         noseve.setColor(Color.green.darker());
-        noseve.fillRect(0, 0, 700, 800);
+        noseve.fillRect(0, 0, 7000, 8000);
         noseve.drawImage(reverso, 20, 20, Carta.ANCHURA, Carta.ALTURA, this);
-        //oseve.drawImage(baraja.sacarcarta().imagen, 20, 20, Carta.ANCHURA, Carta.ALTURA, this);
         for (MazoPalo i : mazoPalos) {
             i.paint(noseve, this);
         }
-        mazoSecundario.paint(noseve, this);
 
+        for (MazoJuego i : mazoJuegos) {
+            i.paint(noseve, this);
+        }
+
+        mazoSecundario.paint(noseve, this);
         g.drawImage(imagen, 0, 0, this);
     }
 
@@ -57,12 +70,25 @@ public class Principal extends Applet {
 
     public boolean mouseDown(Event e, int x, int y) {
         if (rectangulo.contains(x, y)) {
-            mazoSecundario.anadir(baraja.sacarcarta());
-            mazoSecundario.recolocar();
+            if (!baraja.getCartas().isEmpty()) {
+                mazoSecundario.anadir(baraja.sacarcarta());
+                mazoSecundario.recolocar();
+            } else {
+                baraja.setCartas(mazoSecundario.getCartas());
+                mazoSecundario.setCartas(new ArrayList<Carta>());
+                mazoSecundario.anadir(baraja.sacarcarta());
+            }
+        }
+        for (MazoJuego i : mazoJuegos) {
+            if (i.extraer().contains(x, y)) {
+                activa = i.extraer();
+            }
+
         }
         if (mazoSecundario.extraer().contains(x, y)) {
             activa = mazoSecundario.extraer();
         }
+
         repaint();
         return true;
     }
@@ -77,9 +103,24 @@ public class Principal extends Applet {
 
     public boolean mouseUp(Event e, int x, int y) {
         if (activa != null) {
-            mazoSecundario.recolocar();
             for (MazoPalo i : mazoPalos) {
-                i.anadir(activa);
+                if (activa.intersects(i)) {
+                    if (i.anadir(activa)) {
+                        mazoSecundario.eliminar();
+                        break;
+                    }
+                }
+            }
+            for (MazoJuego i : mazoJuegos) {
+                if (activa.intersects(i.extraer())) {
+                    if (i.anadir(activa)) {
+                        i.eliminar();
+                        break;
+                    }
+                }
+            }
+            if (!mazoSecundario.getCartas().isEmpty()) {
+                mazoSecundario.recolocar();
             }
 
             activa = null;
