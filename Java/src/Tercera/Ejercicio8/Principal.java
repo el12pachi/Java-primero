@@ -19,6 +19,7 @@ public class Principal extends Applet {
     Carta activa;
     MazoPalo mazoPalos[];
     MazoJuego mazoJuegos[];
+    boolean secunadario;
 
     public void init() {
         imagen = this.createImage(700, 800); // Crea una imagen para el tablero
@@ -80,13 +81,17 @@ public class Principal extends Applet {
             }
         }
         for (MazoJuego i : mazoJuegos) {
-            if (i.extraer().contains(x, y)) {
-                activa = i.extraer();
+            Carta carta = i.extraer();
+            if (carta != null && carta.contains(x, y)) {
+                activa = carta;
+                secunadario = false;
             }
-
         }
-        if (mazoSecundario.extraer().contains(x, y)) {
-            activa = mazoSecundario.extraer();
+
+        Carta cartaSecundaria = mazoSecundario.extraer();
+        if (cartaSecundaria != null && cartaSecundaria.contains(x, y)) {
+            activa = cartaSecundaria;
+            secunadario = true;
         }
 
         repaint();
@@ -106,18 +111,25 @@ public class Principal extends Applet {
             for (MazoPalo i : mazoPalos) {
                 if (activa.intersects(i)) {
                     if (i.anadir(activa)) {
-                        mazoSecundario.eliminar();
+                        eliminarCartaDeOrigen();
                         break;
                     }
                 }
             }
             for (MazoJuego i : mazoJuegos) {
-                if (activa.intersects(i.extraer())) {
+                if (i.getCartas().isEmpty()) {
+                    if (activa.intersects(i)) {
+                        i.anadir(activa);
+                        eliminarCartaDeOrigen();
+                        break;
+                    }
+                } else if (activa.intersects(i.extraer())) {
                     if (i.anadir(activa)) {
-                        i.eliminar();
+                        eliminarCartaDeOrigen();
                         break;
                     }
                 }
+                i.recolocar();
             }
             if (!mazoSecundario.getCartas().isEmpty()) {
                 mazoSecundario.recolocar();
@@ -128,4 +140,18 @@ public class Principal extends Applet {
         repaint();
         return true;
     }
+
+    private void eliminarCartaDeOrigen() {
+        if (secunadario) {
+            mazoSecundario.eliminar();
+        } else {
+            for (MazoJuego j : mazoJuegos) {
+                if (j.getCartas().contains(activa)) {
+                    j.eliminar();
+                    break;
+                }
+            }
+        }
+    }
+
 }

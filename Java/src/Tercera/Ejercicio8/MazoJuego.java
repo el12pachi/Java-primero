@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class MazoJuego extends Rectangle {
 
     public static final int POSICIONY = 200;
-    ArrayList<Carta> cartas;
+    private ArrayList<Carta> cartas;
 
     public MazoJuego(int posX) {
         super(posX, POSICIONY, Carta.ANCHURA, Carta.ALTURA);
@@ -26,9 +26,10 @@ public class MazoJuego extends Rectangle {
     }
 
     public boolean anadir(Carta carta) {
-        if (cartas.isEmpty() || (carta.getColor() != cartas.get(cartas.size() - 1).getColor() && (carta.getValor() + 1 == cartas.get(cartas.size() - 1).getValor()))) {
-            recolocar(carta);
-            cartas.add(carta);
+        System.out.println("Intentando poner: " + carta.getValor() + " de " + carta.getColor()
+                + " sobre: " + (cartas.isEmpty() ? "vacio" : (cartas.get(cartas.size() - 1).getValor() + " de " + cartas.get(cartas.size() - 1).getColor())));
+
+        if (cartas.isEmpty()|| ((carta.getColor() != cartas.get(cartas.size() - 1).getColor())&& (carta.getValor() + 1 == cartas.get(cartas.size() - 1).getValor()))) {
             return true;
         }
         return false;
@@ -38,6 +39,14 @@ public class MazoJuego extends Rectangle {
         cartas.add(carta);
         cartas.get(cartas.size() - 1).setPosition(x, POSICIONY + PosY);
         return true;
+    }
+
+    public ArrayList<Carta> getCartas() {
+        return cartas;
+    }
+
+    public void setCartas(ArrayList<Carta> cartas) {
+        this.cartas = cartas;
     }
 
     public Carta extraer() {
@@ -57,5 +66,12 @@ public class MazoJuego extends Rectangle {
         } else {
             carta.setPosition(x, y + (25 * (cartas.size() - 1)));
         }
+    }
+
+    public void recolocar() {
+        for (int i = 0; i < cartas.size(); i++) {
+            cartas.get(i).setPosition(x, y + (25 * i));
+        }
+
     }
 }
