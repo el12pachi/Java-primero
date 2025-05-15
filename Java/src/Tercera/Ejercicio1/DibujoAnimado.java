@@ -5,8 +5,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 
 public class DibujoAnimado {
-    public Image imagenes[];
-    public int actual = 0;
+    private Image imagenes[];
+    private int actual = 0;
     
     
     public DibujoAnimado(Image imgs[]){
@@ -20,4 +20,22 @@ public class DibujoAnimado {
     public void update(){
         actual = (actual + 1) % imagenes.length;
     }
+
+    public Image[] getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(Image[] imagenes) {
+        this.imagenes = imagenes;
+    }
+
+    public int getActual() {
+        return actual;
+    }
+
+    public void setActual(int actual) {
+        this.actual = actual;
+    }
+    
+    
 }
